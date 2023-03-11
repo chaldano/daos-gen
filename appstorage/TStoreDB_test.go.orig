@@ -1,0 +1,34 @@
+package appstorage
+
+import (
+    "testing"
+    // "github.com/holmes89/hello-api/translation"
+)
+// import conf "trustkbb.de/tools/dbtools/appconfig"
+import data "trustkbb.de/tools/dbtools/appdata"
+
+
+func TestDBTable(t *testing.T) {
+    // Erzeugt 1 Person
+    // Speichert Personen in Datenbank
+    // Arrange
+    // path := "./../appconfig/UrlConfig.json"
+	// conf.Dbconf = conf.InitConfig(path)
+	// res:=conf.Dbconf.LoadConfig()
+	// if res != nil {
+    //     t.Errorf(`load Config in %s expected - wrong Config access "%s"`, path,res)
+    // }
+    // Act
+	count := 1
+    Persons,res1 := data.CreateNObjects("Persons",count,nil)
+	if res1 != nil {
+        t.Errorf(`created person object expected - wrong person object created "%s"`, res1)
+    }
+	data.Report(Persons)
+    res = Persons.StoreDB()
+    
+	// Assert
+    if res != nil {
+        t.Errorf(`insert person object to DB expected - wrong DB access "%s"`, res)
+    }
+}

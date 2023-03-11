@@ -1,0 +1,24 @@
+package apppki
+
+import (
+	// "crypto/x509"
+	"fmt"
+	"testing"
+	// "github.com/holmes89/hello-api/translation"
+)
+// import data "trustkbb.de/tools/dbtools/appdata"
+
+// import conf "trustkbb.de/tools/dbtools/appconfig"
+
+func TestCert(t *testing.T) {
+
+	// Arrange
+	var err error
+	cert := CreateCert("NameCert")
+	
+	// Assert
+	if err != nil {
+		t.Errorf("ca-cert creation error %s\n", err)
+	}
+	fmt.Println("Certificate:",cert.Name)
+}

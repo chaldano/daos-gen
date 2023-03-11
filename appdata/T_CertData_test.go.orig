@@ -1,0 +1,36 @@
+package appdata
+
+import (
+	// "crypto/x509"
+	"fmt"
+	"testing"
+	// "github.com/holmes89/hello-api/translation"
+)
+import pki "trustkbb.de/tools/dbtools/apppki"
+
+// import conf "trustkbb.de/tools/dbtools/appconfig"
+
+func (e *Entity) getCert(){
+	cert := pki.CreateCert(e.Name)
+	// fmt.Println(cert.Name) 
+	e.Certname = cert.Name
+	// fmt.Println(e.Certname) 
+	// fmt.Println(e) 
+}
+
+func TestCertData(t *testing.T) {
+
+	// Arrange
+	var err error
+	e := new(Entity)
+	e.Name ="Testname"
+	e.getCert()
+	
+	// Assert
+	if err != nil {
+		t.Errorf("ca-cert creation error %s\n", err)
+	}
+	fmt.Println("EntityName:",e.Name)
+	fmt.Println("EntityCertName:",e.Certname)
+
+}

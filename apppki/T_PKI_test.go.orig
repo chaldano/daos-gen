@@ -1,0 +1,41 @@
+package apppki
+
+import (
+	// "crypto/x509"
+	"fmt"
+	"testing"
+	// "github.com/holmes89/hello-api/translation"
+)
+import data "trustkbb.de/tools/dbtools/appdata"
+
+// import conf "trustkbb.de/tools/dbtools/appconfig"
+
+func TestRandCACert(t *testing.T) {
+
+	// Arrange
+	var err error
+	// var ca x509.Certificate
+	var ca data.CA
+
+	count := 1
+	cas, err := data.CreateNObjects("CA", count, "")
+	if err != nil {
+		t.Errorf("ca creation error %s\n", err)
+	}
+
+	// p = Persons.Items[0].(data.Person)
+
+	data.Report(cas)
+
+	// Act
+	ca = cas.Items[0].(data.CA)
+	
+	err = createRootCert(&ca)
+
+	// Assert
+	if err != nil {
+		t.Errorf("ca-cert creation error %s\n", err)
+	}
+	fmt.Println("RootCA", ca)
+
+}
