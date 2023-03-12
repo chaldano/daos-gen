@@ -1,30 +1,20 @@
 package main
 
 import (
-	// "encoding/json"
-	"reflect"
+	// "reflect"
 	"flag"
-	"fmt"
+	// "fmt"
 	"os"
-	// "strconv"
-	// "log"
 	"bytes"
-	// "database/sql"
-	// "io"
-	// "net/http"
-	"regexp"
-	// "encoding/json"
-	// "github.com/satori/go.uuid"
+	// "regexp"
 	
 )
 
 import log "github.com/sirupsen/logrus"
-// import data "trustkbb.de/daosgenerate/appdata"
-// import conf "trustkbb.de/daosgenerate/appconfig"
-// import errmod "trustkbb.de/daosgenerate/apperror"
-import data "appdata"
-import conf "appconfig"
-import errmod "apperror"
+import data "trustkbb.de/daosgenerate/appdata"
+// import conf   "trustkbb.de/tools/dbtools/appconfig"
+// import errmod "trustkbb.de/tools/dbtools/apperror"
+// import test   "trustkbb.de/daosgen/apptest"
 
 var Buf    bytes.Buffer
 var LoggerDB *log.Logger
@@ -47,9 +37,9 @@ func init() {
 	})
 	log.Info("Setup Configuration! DBTOOL")
 	
-	conf.Dbconf = conf.InitConfig("./appconfig/UrlConfig.json")
-	err=conf.Dbconf.LoadConfig()
-	errmod.CheckError("LoadJson Configuration",err) 
+	// conf.Dbconf = conf.InitConfig("./appconfig/UrlConfig.json")
+	// err=conf.Dbconf.LoadConfig()
+	// errmod.CheckError("LoadJson Configuration",err) 
 	log.Info("Starting MAIN")	
 }
 func main() {
@@ -69,93 +59,99 @@ func main() {
 	log.Debug("Index: ", index)
 	log.Debug("Count: ", count)
 
-	// conf.Dbconf.ShowConfig()
+	// var result = test.Hello()
+	// fmt.Println(result)
+    // // conf.Dbconf.ShowConfig()
 
 	switch category {
 
-	case "Array":
+	// case "Array":
 
-	x := [...]int{10, 20, 30}
+	// x := [...]int{10, 20, 30}
 
-	log.Debug("Mit Anzahl:",reflect.ValueOf(x).Kind())
-	log.Debug(len(x))
+	// log.Debug("Mit Anzahl:",reflect.ValueOf(x).Kind())
+	// log.Debug(len(x))
 
-	y := []int{10, 20, 30}
+	// y := []int{10, 20, 30}
 
-	log.Debug("Ohne Anzahl:",reflect.ValueOf(y).Kind())
-	log.Debug(len(y))
+	// log.Debug("Ohne Anzahl:",reflect.ValueOf(y).Kind())
+	// log.Debug(len(y))
 
-	case "Test":
+	// case "Test":
 
-		zeichen  := []string {"Hofladen","Hof'tür","Hofstrasse"}
-		re := regexp.MustCompile(`'`)
-		for i, z := range zeichen {
-			fmt.Printf("Vorher: %-02d %s\n",i,z)
-		    fmt.Println(re.FindString(z))
+	// 	zeichen  := []string {"Hofladen","Hof'tür","Hofstrasse"}
+	// 	re := regexp.MustCompile(`'`)
+	// 	for i, z := range zeichen {
+	// 		fmt.Printf("Vorher: %-02d %s\n",i,z)
+	// 	    fmt.Println(re.FindString(z))
 			
-			fmt.Println("Ausgabe",re.ReplaceAllString(z, "\\'"))
-			z= re.ReplaceAllString(z, "\\'")
-			fmt.Printf("Nachher: %-02d %s\n",i,z)
+	// 		fmt.Println("Ausgabe",re.ReplaceAllString(z, "\\'"))
+	// 		z= re.ReplaceAllString(z, "\\'")
+	// 		fmt.Printf("Nachher: %-02d %s\n",i,z)
 			
-			z= re.FindString(z)
-			if z != "" {
-				fmt.Println("Match ...")
-			}	
-		}
+	// 		z= re.FindString(z)
+	// 		if z != "" {
+	// 			fmt.Println("Match ...")
+	// 		}	
+	// 	}
 
 	case "Persons":
 		{
 			// var Persons data.Persons
 			// Persons := data.CreatePersons()
 			// Persons.CreateNPerson(conf.Dbconf, int(count))
-			Persons.CreateNObjects(int(count))
-			// data.Report(Persons)
-			err := Persons.StoreDB()
-			errmod.CheckError("Store Persons to DB",err)	
+			count2:= 20
+			Persons,_ := data.CreateNObjects("PersonsNat",count2,nil)
+			// fmt.Println("Persons",Persons)
+			data.Report(Persons)
+			// err := Persons.StoreDB()
+			// errmod.CheckError("Store Persons to DB",err)	
 		}
 	
-		case "Adressen":
-		{
-			// body := data.GetCategoryElements(category, index, conf.Dbconf)
-			err:=conf.Dbconf.CheckConfig(category, index)
-			errmod.CheckError("Konfiguration Adressen",err)
-		
-			var adressen data.Adressen
-			adressen.LoadRandObjects(index)
-			data.Report(adressen)
-		}
-	case "Zahlensequenz":
-		{
-			err:=conf.Dbconf.CheckConfig(category, index)
-			errmod.CheckError("Konfiguration Zahlensequenz",err)
-			var seq data.Zahlensequenzen
-			aseq := &seq
-			aseq.LoadRandObjects(index)
-			data.Report(seq)
-		}
-	case "Namen":
-		{
-			err:=conf.Dbconf.CheckConfig(category, index)
-			errmod.CheckError("Konfiguration Namen",err)
-			var ns data.Names
-			ns.LoadRandObjects(index)
-			data.Report(ns)
-		}
+		// case "Adressen":
+		// {
+		// 	// body := data.GetCategoryElements(category, index, conf.Dbconf)
+		// 	err:=conf.Dbconf.CheckConfig(category, index)
+		// 	errmod.CheckError("Konfiguration Adressen",err)
+		// 	fmt.Println("IndexTest:", index)
+		// 	// var adressen data.Adressen
+		// 	// adressen.LoadRandObjects(index)
+		// 	// data.Report(adressen)
+		// }
+	// case "Zahlensequenz":
+	// 	{
+	// 		err:=conf.Dbconf.CheckConfig(category, index)
+	// 		errmod.CheckError("Konfiguration Zahlensequenz",err)
+	// 		fmt.Println("Durch ..",category, index, count)
+	// 		// var seq data.Zahlensequenzen
+	// 		// aseq := &seq
+	// 		// aseq.LoadRandObjects(index)
+	// 		seq,_ := data.LoadRObjects(category,count,index)
+	// 		data.Report(seq)
+	// 	}
+	// case "Namen":
+	// 	{
+	// 		err:=conf.Dbconf.CheckConfig(category, index)
+	// 		errmod.CheckError("Konfiguration Namen",err)
+	// 		var ns data.Names
+	// 		ns.LoadRandObjects(index)
+	// 		data.Report(ns)
+	// 	}
 
-	case "SocialNumbers":
-		{
-			err:=conf.Dbconf.CheckConfig(category, index)
-			errmod.CheckError("Konfiguration Socialnumbers",err)
-			var sns data.SocialNumbers
-			sns.LoadRandSocialObjects(index)
-			data.Report(sns)
-		}
+	// case "SocialNumbers":
+	// 	{
+	// 		err:=conf.Dbconf.CheckConfig(category, index)
+	// 		errmod.CheckError("Konfiguration Socialnumbers",err)
+	// 		var sns data.SocialNumbers
+	// 		sns.LoadRandSocialObjects(index)
+	// 		data.Report(sns)
+	// 	}
 
-	default:
-		err:=conf.Dbconf.CheckConfig(category, index)
-		errmod.CheckError("Default: fehlende Kategorie",err)
-		// body := net.GetCategoryElements(category, index, conf.Dbconf)
-		// fmt.Printf("Default:\n%s\n", body)
+	// default:
+	// 	err:=conf.Dbconf.CheckConfig(category, index)
+	// 	errmod.CheckError("Default: fehlende Kategorie",err)
+	// 	// body := net.GetCategoryElements(category, index, conf.Dbconf)
+	// 	// fmt.Printf("Default:\n%s\n", body)
 	}
 	os.Exit(0)
 }

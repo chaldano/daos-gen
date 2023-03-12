@@ -11,7 +11,7 @@ import (
 import "github.com/icrowley/fake"
 	
 import errmod "trustkbb.de/daosgenerate/apperror"
-import conf "trustkbb.de/daosgenerate/appconfig"
+// import conf "trustkbb.de/daosgenerate/appconfig"
 // import dbs "trustkbb.de/daosgenerate/appstorage"
 import pki "trustkbb.de/daosgenerate/apppki"
 import log "github.com/sirupsen/logrus"
@@ -19,11 +19,11 @@ import log "github.com/sirupsen/logrus"
 // Methods CreatedObjects
 func init() {
 	log.SetLevel(log.DebugLevel)
-	log.Info("Setup Config Data! (Init DataObjects)")
-	path := "./../appconfig/UrlConfig.json"
-	conf.Dbconf = conf.InitConfig(path)
-	err := conf.Dbconf.LoadConfig()
-	errmod.CheckError("Init Config", err)
+	// log.Info("Setup Config Data! (Init DataObjects)")
+	// path := "./../appconfig/UrlConfig.json"
+	// conf.Dbconf = conf.InitConfig(path)
+	// err := conf.Dbconf.LoadConfig()
+	// errmod.CheckError("Init Config", err)
 }
 
 func CreateNObjects(cat string, anz int, r interface{}) (CreatedObjects, error) {
